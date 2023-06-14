@@ -1,0 +1,38 @@
+#******************* JPA provider properties **********************#
+#showSql- to determines the displaying of executing SQL statement in console
+showSql=true
+
+#generateDdl- to determines the table creation while the server start
+generateDdl=true
+
+#database- Specify the Database provider name
+database=MYSQL
+
+#database- Specify the Database specific provider dialect class name.
+databasePlatform=org.hibernate.dialect.MySQLDialect
+
+#******************* DBCP Related properties **********************#
+
+#database.driver - to specify a database driver class name
+database.driver=com.mysql.jdbc.Driver
+
+#database.driverParameters - to specify a database connection related properties and values.
+database.driverParameters=jdbc:mysql://192.168.1.194:3306/dbaow
+
+#database.user  - to specify a database Schema User Name.
+database.user=root
+
+#database.password - to specify a database Schema Password.
+database.password=sa
+
+#database.pool.min.size - to specify a database pool size minimum
+database.pool.min.size=25
+
+#database.pool.max.size - to specify a database pool size maximum
+database.pool.max.size=50
+
+#database jndi binding name
+jndi.name=java:comp/env/TEFWeb
+
+#***************** Domain Entity Package **************** #
+domain.entity.package=com.s7.tef.domain.entity

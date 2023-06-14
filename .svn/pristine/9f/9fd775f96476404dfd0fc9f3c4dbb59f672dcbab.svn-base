@@ -1,0 +1,59 @@
+package com.oas.webservice.dao;
+
+import java.util.List;
+
+import com.oas.webservice.vo.ComplaintsVo;
+import com.oas.webservice.vo.DriverPerformanceVo;
+import com.oas.webservice.vo.FeedbackVo;
+import com.oas.webservice.vo.LocationVo;
+import com.oas.webservice.vo.SvcComplaintsVo;
+import com.oas.webservice.vo.TextPublishVo;
+import com.oas.webservice.vo.VideoPublishVo;
+
+
+public interface DeviceResponseDao {
+
+	
+
+	List<VideoPublishVo> fetchVideoPublishDetails(String imeino, String dbName);
+
+	List<TextPublishVo> fetchTextPublishDetails(String imeino, String dbName);
+
+	int insertFeedback(String vehicleNo, String drivername,
+			String drivercontact, String starrating, String feedback,
+			String datetime, String vehicleclean, String driverattitude,
+			String passengerno, String passengername);
+
+	DriverPerformanceVo fetchDriverInfoDetails(String imeino);
+
+	int insertVideoLog(String array);
+
+	int insertDownloadStatus(String array);
+
+	int insertlatLong(String array);
+	
+	List<LocationVo> fetchLocationDetails(String locationId);
+	
+	String fetchRoleId(String userName, String password);
+
+	List<ComplaintsVo> fetchComplaintDetails();
+
+	List<FeedbackVo> fetchFeedbackDetails();
+
+	int insertDriverFeedback(String vechNo, String date, String feedback,
+			String remarks);
+
+	int insertServiceComplaint(String vechNo, String date, String device1,
+			String device2, String remarks);
+
+	String fetchsvcempId(String empId, String password);
+
+	int insertAttendanceDetails(String empId, String intime, String latitude,
+			String longitude);
+
+	List<SvcComplaintsVo> fetchSvcComplaints(String svc_emp_id);
+
+	int insertPassengerIntrestDetails(String adid, String advtfilename,
+			String ins_datetime, String pass_name, String pass_mobile);
+
+}

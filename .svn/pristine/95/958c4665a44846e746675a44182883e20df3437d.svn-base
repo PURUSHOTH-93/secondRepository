@@ -1,0 +1,92 @@
+package com.oas.webservice.vo;
+
+import java.io.Serializable;
+
+public class SvcComplaintsVo implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	private String cmpId;
+	private String vechNo;
+	private String date_Time;
+	private String device1;
+	private String device2;
+	private String status;
+	
+	/**
+	 * @return the cmpId
+	 */
+	public String getCmpId() {
+		return cmpId;
+	}
+	/**
+	 * @param cmpId the cmpId to set
+	 */
+	public void setCmpId(String cmpId) {
+		this.cmpId = cmpId;
+	}
+	/**
+	 * @return the vechNo
+	 */
+	public String getVechNo() {
+		return vechNo;
+	}
+	/**
+	 * @param vechNo the vechNo to set
+	 */
+	public void setVechNo(String vechNo) {
+		this.vechNo = vechNo;
+	}
+	/**
+	 * @return the date_Time
+	 */
+	public String getDate_Time() {
+		return date_Time;
+	}
+	/**
+	 * @param date_Time the date_Time to set
+	 */
+	public void setDate_Time(String date_Time) {
+		this.date_Time = date_Time;
+	}
+	/**
+	 * @return the device1
+	 */
+	public String getDevice1() {
+		return device1;
+	}
+	/**
+	 * @param device1 the device1 to set
+	 */
+	public void setDevice1(String device1) {
+		this.device1 = device1;
+	}
+	/**
+	 * @return the device2
+	 */
+	public String getDevice2() {
+		return device2;
+	}
+	/**
+	 * @param device2 the device2 to set
+	 */
+	public void setDevice2(String device2) {
+		this.device2 = device2;
+	}
+	/**
+	 * @return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	
+	
+	
+
+}

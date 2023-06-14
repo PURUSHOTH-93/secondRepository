@@ -1,0 +1,655 @@
+package com.oas.webservice.dao.daoImp;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+
+import com.oas.webservice.dao.DeviceResponseDao;
+import com.oas.webservice.dbutil.CommonDbUtil;
+import com.oas.webservice.vo.ComplaintsVo;
+import com.oas.webservice.vo.DriverPerformanceVo;
+import com.oas.webservice.vo.FeedbackVo;
+import com.oas.webservice.vo.LocationVo;
+import com.oas.webservice.vo.TextPublishVo;
+import com.oas.webservice.vo.VideoPublishVo;
+
+public class DeviceResponseDaoImpl implements DeviceResponseDao {
+	/** ***** Logger Instance. ******/
+	private final static Logger LOG = Logger
+			.getLogger(DeviceResponseDaoImpl.class);
+	Connection connection = null;
+	Statement statement = null;
+	PreparedStatement preparedStatement = null;
+	ResultSet resultSet = null;
+
+	@Override
+	public List<VideoPublishVo> fetchVideoPublishDetails(String imeino,
+			String dbName) {
+		List<VideoPublishVo> videoPublishes = new ArrayList<VideoPublishVo>();
+
+		String query = "{call USP_CHECK_VIDEO_PUBLISH('" + imeino + "','"
+				+ dbName + "')}";
+		LOG.info("inside the video publish details Query " + query);
+		CommonDbUtil commonDbUtil = new CommonDbUtil();
+		try {
+			Class.forName(commonDbUtil.getJdbcDriver());
+			if (commonDbUtil.isDbConnectionCheck()) {
+				connection = commonDbUtil.openConnectionGO(connection);
+				preparedStatement = connection.prepareStatement("");
+
+				resultSet = preparedStatement.executeQuery(query);
+				VideoPublishVo videoPublish1;
+				while (resultSet.next()) {
+					videoPublish1 = new VideoPublishVo();
+					videoPublish1.setPublishDate(resultSet.getString(1));
+					videoPublish1.setVideoFileName(resultSet.getString(2));
+					videoPublish1.setStartDate(resultSet.getString(3));
+					videoPublish1.setEndDate(resultSet.getString(4));
+					videoPublish1.setDuration(resultSet.getString(5));
+					videoPublish1.setFileSize(resultSet.getString(6));
+					videoPublish1.setFileType(resultSet.getString(7));
+					videoPublish1.setCatgName(resultSet.getString(8));
+					videoPublish1.setLatitude(resultSet.getString(9));
+					videoPublish1.setLogtitude(resultSet.getString(10));
+					videoPublish1.setLocationId(resultSet.getString(11));
+					videoPublish1.setContentType(resultSet.getString(12));
+					videoPublish1.setVidImgPath(resultSet.getString(13));
+					videoPublishes.add(videoPublish1);
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.debug("Error while fetch the video publish details for Dao Impl ----->fetchVideoPublishDetails()"
+					+ e);
+		} finally {
+			commonDbUtil.closeAllConnections(resultSet, preparedStatement,
+					statement, connection);
+		}
+		return videoPublishes;
+	}
+
+	@Override
+	public List<TextPublishVo> fetchTextPublishDetails(String imeino,
+			String dbName) {
+
+		List<TextPublishVo> textPublishes = new ArrayList<TextPublishVo>();
+		CommonDbUtil commonDbUtil = new CommonDbUtil();
+
+		try {
+			Class.forName(commonDbUtil.getJdbcDriver());
+			if (commonDbUtil.isDbConnectionCheck()) {
+				connection = commonDbUtil.openConnectionGO(connection);
+				PreparedStatement statement;
+				String query = "{call USP_CHECK_TEXT_PUBLISH('" + imeino
+						+ "','" + dbName + "')}";
+
+				LOG.info("inside the text publish details Query " + query);
+				statement = connection.prepareStatement(query);
+				resultSet = statement.executeQuery();
+
+				while (resultSet.next()) {
+					TextPublishVo textPublish1 = new TextPublishVo();
+					textPublish1.setPublishDate(resultSet.getString(1));
+					textPublish1.setTxtMessage(resultSet.getString(2));
+					textPublish1.setStartDate(resultSet.getString(3));
+					textPublish1.setEndDate(resultSet.getString(4));
+
+					textPublishes.add(textPublish1);
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.debug("Error while fetch the text publish details for Dao Impl ----->fetchTextPublishDetails()"
+					+ e);
+		} finally {
+			commonDbUtil.closeAllConnections(resultSet, preparedStatement,
+					statement, connection);
+		}
+		return textPublishes;
+	}
+
+	@Override
+	public int insertFeedback(String vehicleNo, String drivername,
+			String drivercontact, String starrating, String feedback,
+			String datetime, String vehicleclean, String driverattitude,
+			String passengerno, String passengername) {
+		int result = 0;
+		CommonDbUtil commonDbUtil = new CommonDbUtil();
+		try {
+			String sql = "Insert into tbl_driver_perform(Vehicleno,Drivername,Mobileno,Starrating,Feedback,Create_Date,Vehicle_clean,Driver_Attitude,Passengerno,passengername) values "
+					+ "('"
+					+ vehicleNo
+					+ "','"
+					+ drivername
+					+ "','"
+					+ drivercontact
+					+ "','"
+					+ starrating
+					+ "','"
+					+ feedback
+					+ "','"
+					+ datetime
+					+ "','"
+					+ vehicleclean
+					+ "','"
+					+ driverattitude
+					+ "','"
+					+ passengerno
+					+ "','"
+					+ passengername + "')";
+			LOG.info("Inside the insert feedback details Query " + sql);
+			Class.forName(commonDbUtil.getJdbcDriver());
+			if (commonDbUtil.isDbConnectionCheck()) {
+				connection = commonDbUtil.openConnectionGO(connection);
+
+				statement = connection.createStatement();
+
+				preparedStatement = connection.prepareStatement(sql);
+
+				result = preparedStatement.executeUpdate();
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.debug("Error while insert the feedback for Dao Impl ----->insertFeedback()"
+					+ e);
+		} finally {
+			commonDbUtil.closeAllConnections(resultSet, preparedStatement,
+					statement, connection);
+		}
+
+		return result;
+	}
+
+	@Override
+	public DriverPerformanceVo fetchDriverInfoDetails(String imeino) {
+		DriverPerformanceVo driverPerformanceVo = null;
+		CommonDbUtil commonDbUtil = new CommonDbUtil();
+
+		try {
+			Class.forName(commonDbUtil.getJdbcDriver());
+			if (commonDbUtil.isDbConnectionCheck()) {
+				connection = commonDbUtil.openConnectionGO(connection);
+				PreparedStatement statement;
+				String query = "SELECT a.Vech_No,a.Vech_model,a.Vech_Owner,a.Vech_Driver_Contact,a.Vech_Owner_Email,a.Vech_Driver_Name FROM  "
+						+ "tbl_vehicle_details a,tbl_device_details b WHERE a.vech_no=b.vech_no AND b.IMEINO='"
+						+ imeino + "'";
+
+				LOG.info("Inside the  driver details Query " + query);
+				statement = connection.prepareStatement(query);
+				resultSet = statement.executeQuery();
+				while (resultSet.next()) {
+					driverPerformanceVo = new DriverPerformanceVo();
+					driverPerformanceVo.setVechNo(resultSet.getString(1));
+					driverPerformanceVo.setVechModel(resultSet.getString(2));
+					driverPerformanceVo.setVechOwner(resultSet.getString(3));
+					driverPerformanceVo
+							.setDriverContact(resultSet.getString(4));
+					driverPerformanceVo.setVechOwnerEmail(resultSet
+							.getString(5));
+					driverPerformanceVo.setVechDriverName(resultSet
+							.getString(6));
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.debug("Error while fetch the driver  details for Dao Impl ----->fetchDriverInfoDetails()"
+					+ e);
+		} finally {
+			commonDbUtil.closeAllConnections(resultSet, preparedStatement,
+					statement, connection);
+		}
+		return driverPerformanceVo;
+	}
+
+	@Override
+	public int insertVideoLog(String array) {
+		int result = 0;
+		String sql = "";
+		ArrayList<String> myList = new ArrayList<String>(Arrays.asList(array
+				.split("\\]")));
+		String[] stockArr = new String[myList.size()];
+		stockArr = myList.toArray(stockArr);
+		for (int i = 0; i < stockArr.length; i++)
+		// for (int i = 0; i < myList; i++)
+		{
+			if (stockArr[i].contains(",")) {
+				String[] types = stockArr[i].split(",");
+				CommonDbUtil commonDbUtil = new CommonDbUtil();
+				try {
+					if (i >= 1) {
+						sql = "Insert into tbl_videolog(IMEI_NO,VFilename,VDateTime,VlAT,VLONG)values('"
+								+ types[1].replace("[", "").replace("]", "")
+										.trim()
+								+ "','"
+								+ types[2].replace("[", "").replace("]", "")
+										.trim()
+								+ "','"
+								+ types[3].replace("[", "").replace("]", "")
+										.trim()
+								+ "','"
+								+ types[4].replace("[", "").replace("]", "")
+										.trim()
+								+ "','"
+								+ types[5].replace("[", "").replace("]", "")
+										.trim() + "')";
+					} else {
+
+						sql = "Insert into tbl_videolog(IMEI_NO,VDateTime,VFilename,VlAT,VLONG)values('"
+								+ types[0].replace("[", "").replace("]", "")
+										.trim()
+								+ "','"
+								+ types[1].replace("[", "").replace("]", "")
+										.trim()
+								+ "','"
+								+ types[2].replace("[", "").replace("]", "")
+										.trim()
+								+ "','"
+								+ types[3].replace("[", "").replace("]", "")
+										.trim()
+								+ "','"
+								+ types[4].replace("[", "").replace("]", "")
+										.trim() + "')";
+					}
+					LOG.info("Inside the insert video logs details Query "
+							+ sql);
+					Class.forName(commonDbUtil.getJdbcDriver());
+					if (commonDbUtil.isDbConnectionCheck()) {
+						connection = commonDbUtil.openConnectionGO(connection);
+
+						statement = connection.createStatement();
+
+						preparedStatement = connection.prepareStatement(sql);
+
+						result = preparedStatement.executeUpdate();
+
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					LOG.debug("Error while insert the video logs details for Dao Impl ----->insertVideoLog()"
+							+ e);
+				} finally {
+					commonDbUtil.closeAllConnections(resultSet,
+							preparedStatement, statement, connection);
+				}
+
+			}
+		}
+		return result;
+	}
+
+	@Override
+	public int insertDownloadStatus(String array) {
+		int result = 0;
+		String sql = "";
+		ArrayList<String> myList = new ArrayList<String>(Arrays.asList(array
+				.split("\\]")));
+		String[] stockArr = new String[myList.size()];
+		stockArr = myList.toArray(stockArr);
+		for (int i = 0; i < stockArr.length; i++)
+		// for (int i = 0; i < myList; i++)
+		{
+			if (stockArr[i].contains(",")) {
+				String[] types = stockArr[i].split(",");
+				CommonDbUtil commonDbUtil = new CommonDbUtil();
+				try {
+					if (i >= 1) {
+						sql = "Insert into tbl_downloadstatus(DeviceID,PUB_Datetime,DWL_Datetime,DWL_STATUS)values('"
+								+ types[1].replace("[", "").replace("]", "")
+										.trim()
+								+ "','"
+								+ types[2].replace("[", "").replace("]", "")
+										.trim()
+								+ "','"
+								+ types[3].replace("[", "").replace("]", "")
+										.trim()
+								+ "','"
+								+ types[4].replace("[", "").replace("]", "")
+										.trim() + "')";
+					} else {
+
+						sql = "Insert into tbl_downloadstatus(DeviceID,PUB_Datetime,DWL_Datetime,DWL_STATUS)values('"
+								+ types[0].replace("[", "").replace("]", "")
+										.trim()
+								+ "','"
+								+ types[1].replace("[", "").replace("]", "")
+										.trim()
+								+ "','"
+								+ types[2].replace("[", "").replace("]", "")
+										.trim()
+								+ "','"
+								+ types[3].replace("[", "").replace("]", "")
+										.trim() + "')";
+					}
+					LOG.info("Inside the insert downlaod details details Query "
+							+ sql);
+					Class.forName(commonDbUtil.getJdbcDriver());
+					if (commonDbUtil.isDbConnectionCheck()) {
+						connection = commonDbUtil.openConnectionGO(connection);
+
+						statement = connection.createStatement();
+
+						preparedStatement = connection.prepareStatement(sql);
+
+						result = preparedStatement.executeUpdate();
+
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					LOG.debug("Error while insert the Download status details for Dao Impl ----->insertDownloadStatus()"
+							+ e);
+				} finally {
+					commonDbUtil.closeAllConnections(resultSet,
+							preparedStatement, statement, connection);
+				}
+
+			}
+		}
+		return result;
+
+	}
+
+	@Override
+	public int insertlatLong(String array) {
+		int result = 0;
+		String sql = "";
+		ArrayList<String> myList = new ArrayList<String>(Arrays.asList(array
+				.split("\\]")));
+		String[] stockArr = new String[myList.size()];
+		stockArr = myList.toArray(stockArr);
+		for (int i = 0; i < stockArr.length; i++)
+		// for (int i = 0; i < myList; i++)
+		{
+			if (stockArr[i].contains(",")) {
+				String[] types = stockArr[i].split(",");
+				CommonDbUtil commonDbUtil = new CommonDbUtil();
+				try {
+					if (i >= 1) {
+						sql = "Insert into tbl_latlong(imei_no,llat,llong,ldatetime)values('"
+								+ types[1].replace("[", "").replace("]", "")
+										.trim()
+								+ "','"
+								+ types[2].replace("[", "").replace("]", "")
+										.trim()
+								+ "','"
+								+ types[3].replace("[", "").replace("]", "")
+										.trim()
+								+ "','"
+								+ types[4].replace("[", "").replace("]", "")
+										.trim() + "')";
+					} else {
+
+						sql = "Insert into tbl_latlong(imei_no,llat,llong,ldatetime)values('"
+								+ types[0].replace("[", "").replace("]", "")
+										.trim()
+								+ "','"
+								+ types[1].replace("[", "").replace("]", "")
+										.trim()
+								+ "','"
+								+ types[2].replace("[", "").replace("]", "")
+										.trim()
+								+ "','"
+								+ types[3].replace("[", "").replace("]", "")
+										.trim() + "')";
+					}
+					LOG.info("Inside the insert latlong details Query " + sql);
+					Class.forName(commonDbUtil.getJdbcDriver());
+					if (commonDbUtil.isDbConnectionCheck()) {
+						connection = commonDbUtil.openConnectionGO(connection);
+
+						statement = connection.createStatement();
+
+						preparedStatement = connection.prepareStatement(sql);
+
+						result = preparedStatement.executeUpdate();
+
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					LOG.debug("Error while insert the latlong details for Dao Impl ---->insertlatLong() "
+							+ e);
+				} finally {
+					commonDbUtil.closeAllConnections(resultSet,
+							preparedStatement, statement, connection);
+				}
+
+			}
+		}
+		return result;
+	}
+
+	@Override
+	public List<LocationVo> fetchLocationDetails(String locationId) {
+		List<LocationVo> locations = new ArrayList<LocationVo>();
+
+		CommonDbUtil commonDbUtil = new CommonDbUtil();
+
+		try {
+			Class.forName(commonDbUtil.getJdbcDriver());
+			if (commonDbUtil.isDbConnectionCheck()) {
+				connection = commonDbUtil.openConnectionGO(connection);
+				PreparedStatement statement;
+				String query = "SELECT  * FROM tbl_area_geofence WHERE locationid  IN ("
+						+ locationId + ")";
+				LOG.info("Inside the  location details Query " + query);
+				statement = connection.prepareStatement(query);
+				resultSet = statement.executeQuery();
+				while (resultSet.next()) {
+					LocationVo locationVo = new LocationVo();
+					locationVo.setLocationId(resultSet.getString(1));
+					locationVo.setGeofenceEncode(resultSet.getString(2));
+					locationVo.setCreateDateTime(resultSet.getString(3));
+					locations.add(locationVo);
+
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.debug("Error while fetch the location details for Dao Impl ---->fetchLocationDetails() "
+					+ e);
+		} finally {
+			commonDbUtil.closeAllConnections(resultSet, preparedStatement,
+					statement, connection);
+		}
+		return locations;
+	}
+
+	/****
+	 * TO Fetch the ODS Driver app Login Code here
+	 * 
+	 * @author Siva
+	 * @Parameters userName,Password
+	 * @return To produce the Role ID
+	 **/
+	@Override
+	public String fetchRoleId(String userName, String password) {
+		String result = "";
+		String query = "SELECT roleid FROM tbl_user WHERE username='"
+				+ userName + "' AND PASSWORD='" + password
+				+ "' AND STATUS='Active'";
+		LOG.info("inside the get role id Query " + query);
+
+		CommonDbUtil commonDbUtil = new CommonDbUtil();
+		try {
+			Class.forName(commonDbUtil.getJdbcDriver());
+			if (commonDbUtil.isDbConnectionCheck()) {
+				connection = commonDbUtil.openConnectionGO(connection);
+				preparedStatement = connection.prepareStatement("");
+				resultSet = preparedStatement.executeQuery(query);
+				while (resultSet.next()) {
+					result = resultSet.getString("RoleID");
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.debug("Error while Get the RoleID for Dao Impl ----->fetchRoleId()"
+					+ e);
+		} finally {
+			commonDbUtil.closeAllConnections(resultSet, preparedStatement,
+					statement, connection);
+		}
+		if (result.equals("") || result == null) {
+			result = "0";
+		}
+		return result;
+	}
+
+	@Override
+	public List<ComplaintsVo> fetchComplaintDetails() {
+		List<ComplaintsVo> complaints = new ArrayList<ComplaintsVo>();
+
+		CommonDbUtil commonDbUtil = new CommonDbUtil();
+
+		try {
+			Class.forName(commonDbUtil.getJdbcDriver());
+			if (commonDbUtil.isDbConnectionCheck()) {
+				connection = commonDbUtil.openConnectionGO(connection);
+				PreparedStatement statement;
+				String query = "SELECT compliant FROM tbl_compliantlist ORDER BY cid ASC";
+				LOG.info("Inside the  complaint details Query " + query);
+				statement = connection.prepareStatement(query);
+				resultSet = statement.executeQuery();
+				while (resultSet.next()) {
+					ComplaintsVo complaintVo = new ComplaintsVo();
+					complaintVo.setComplaintName(resultSet.getString(1));
+
+					complaints.add(complaintVo);
+
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.debug("Error while fetch the complaint details for Dao Impl ---->fetchComplaintDetails() "
+					+ e);
+		} finally {
+			commonDbUtil.closeAllConnections(resultSet, preparedStatement,
+					statement, connection);
+		}
+		return complaints;
+	}
+
+	@Override
+	public List<FeedbackVo> fetchFeedbackDetails() {
+		List<FeedbackVo> feedbacks = new ArrayList<FeedbackVo>();
+
+		CommonDbUtil commonDbUtil = new CommonDbUtil();
+
+		try {
+			Class.forName(commonDbUtil.getJdbcDriver());
+			if (commonDbUtil.isDbConnectionCheck()) {
+				connection = commonDbUtil.openConnectionGO(connection);
+				PreparedStatement statement;
+				String query = "SELECT feedback FROM tbl_feedbacklist ORDER BY fid ";
+				LOG.info("Inside the  complaint details Query " + query);
+				statement = connection.prepareStatement(query);
+				resultSet = statement.executeQuery();
+				while (resultSet.next()) {
+					FeedbackVo feedbackVo = new FeedbackVo();
+					feedbackVo.setFeedback(resultSet.getString(1));
+
+					feedbacks.add(feedbackVo);
+
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.debug("Error while fetch the complaint details for Dao Impl ---->fetchFeedbackDetails() "
+					+ e);
+		} finally {
+			commonDbUtil.closeAllConnections(resultSet, preparedStatement,
+					statement, connection);
+		}
+		return feedbacks;
+	}
+
+	@Override
+	public int insertDriverFeedback(String vechNo, String date,
+			String feedback, String remarks) {
+		int result = 0;
+		CommonDbUtil commonDbUtil = new CommonDbUtil();
+		try {
+			String sql = "Insert into tbl_driver_feedback(veh_no,date_time,cus_feedback,remarks) values "
+					+ "('"
+					+ vechNo
+					+ "','"
+					+ date
+					+ "','"
+					+ feedback
+					+ "','"
+					+ remarks + "')";
+			LOG.info("Inside the insert feedback details Query " + sql);
+			Class.forName(commonDbUtil.getJdbcDriver());
+			if (commonDbUtil.isDbConnectionCheck()) {
+				connection = commonDbUtil.openConnectionGO(connection);
+
+				statement = connection.createStatement();
+
+				preparedStatement = connection.prepareStatement(sql);
+
+				result = preparedStatement.executeUpdate();
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.debug("Error while insert the driver feedback for Dao Impl ----->insertDriverFeedback()"
+					+ e);
+		} finally {
+			commonDbUtil.closeAllConnections(resultSet, preparedStatement,
+					statement, connection);
+		}
+
+		return result;
+	}
+
+	@Override
+	public int insertServiceComplaint(String vechNo, String date,
+			String device1, String device2, String remarks) {
+		int result = 0;
+		CommonDbUtil commonDbUtil = new CommonDbUtil();
+		try {
+			String sql = "Insert into tbl_service_compliant(veh_no,date_time,device1,device2,remarks) values "
+					+ "('"
+					+ vechNo
+					+ "','"
+					+ date
+					+ "','"
+					+ device1
+					+ "','"
+					+ device2 + "','" + remarks + "')";
+			LOG.info("Inside the insert feedback details Query " + sql);
+			Class.forName(commonDbUtil.getJdbcDriver());
+			if (commonDbUtil.isDbConnectionCheck()) {
+				connection = commonDbUtil.openConnectionGO(connection);
+
+				statement = connection.createStatement();
+
+				preparedStatement = connection.prepareStatement(sql);
+
+				result = preparedStatement.executeUpdate();
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.debug("Error while insert the Service complaint  for Dao Impl ----->insertServiceComplaint()"
+					+ e);
+		} finally {
+			commonDbUtil.closeAllConnections(resultSet, preparedStatement,
+					statement, connection);
+		}
+
+		return result;
+	}
+}

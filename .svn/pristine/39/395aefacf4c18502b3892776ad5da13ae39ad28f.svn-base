@@ -1,0 +1,87 @@
+package com.oas.webservice.vo;
+
+import java.io.Serializable;
+import java.sql.Date;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement(name = "lat")
+public class latlongVo implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	
+	@XmlElement(name = "imeino")
+	private String imeino;
+
+	@XmlElement(name = "rdatetime")
+	private String rdatetime;
+	
+	@XmlElement(name = "rlat")
+	private String rlat;
+	
+	@XmlElement(name = "rlong")
+	private String rlong;
+
+	/**
+	 * @return the imeino
+	 */
+	public String getImeino() {
+		return imeino;
+	}
+
+	/**
+	 * @param imeino the imeino to set
+	 */
+	public void setImeino(String imeino) {
+		this.imeino = imeino;
+	}
+
+	/**
+	 * @return the rdatetime
+	 */
+	public String getRdatetime() {
+		return rdatetime;
+	}
+
+	/**
+	 * @param rdatetime the rdatetime to set
+	 */
+	public void setRdatetime(String rdatetime) {
+		this.rdatetime = rdatetime;
+	}
+
+	/**
+	 * @return the rlat
+	 */
+	public String getRlat() {
+		return rlat;
+	}
+
+	/**
+	 * @param rlat the rlat to set
+	 */
+	public void setRlat(String rlat) {
+		this.rlat = rlat;
+	}
+
+	/**
+	 * @return the rlong
+	 */
+	public String getRlong() {
+		return rlong;
+	}
+
+	/**
+	 * @param rlong the rlong to set
+	 */
+	public void setRlong(String rlong) {
+		this.rlong = rlong;
+	}
+
+}

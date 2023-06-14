@@ -1,0 +1,76 @@
+package com.oas.webservice.vo;
+
+import java.io.Serializable;
+import java.sql.Date;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement(name = "lat")
+public class videologVo implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	
+	@XmlElement(name = "imeino")
+	private String imeino;
+
+	@XmlElement(name = "ldatetime")
+	private Date ldatetime;
+	
+	@XmlElement(name = "vfilename")
+	private String vfilenme;
+
+	/**
+	 * @return the imeino
+	 */
+	public String getImeino() {
+		return imeino;
+	}
+
+	/**
+	 * @param imeino the imeino to set
+	 */
+	public void setImeino(String imeino) {
+		this.imeino = imeino;
+	}
+
+	/**
+	 * @return the ldatetime
+	 */
+	public Date getLdatetime() {
+		return ldatetime;
+	}
+
+	/**
+	 * @param ldatetime the ldatetime to set
+	 */
+	public void setLdatetime(Date ldatetime) {
+		this.ldatetime = ldatetime;
+	}
+
+	/**
+	 * @return the vfilenme
+	 */
+	public String getVfilenme() {
+		return vfilenme;
+	}
+
+	/**
+	 * @param vfilenme the vfilenme to set
+	 */
+	public void setVfilenme(String vfilenme) {
+		this.vfilenme = vfilenme;
+	}
+
+	
+	
+
+	
+	
+
+}

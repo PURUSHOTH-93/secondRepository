@@ -1,0 +1,27 @@
+/**
+ * 
+ */
+package com.oas.webservice.vo;
+
+/**
+ * @author Siva
+ *
+ */
+public class FeedbackVo {
+private String feedback;
+
+/**
+ * @return the feedback
+ */
+public String getFeedback() {
+	return feedback;
+}
+
+/**
+ * @param feedback the feedback to set
+ */
+public void setFeedback(String feedback) {
+	this.feedback = feedback;
+}
+
+}

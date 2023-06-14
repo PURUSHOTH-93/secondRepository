@@ -1,0 +1,398 @@
+/**
+ * 
+ */
+package com.oas.webservice.controller;
+
+import java.util.ArrayList;
+
+import org.apache.log4j.Logger;
+
+import java.util.List;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriInfo;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.oas.webservice.dao.DeviceResponseDao;
+import com.oas.webservice.dao.daoImp.DeviceResponseDaoImpl;
+import com.oas.webservice.vo.ComplaintsVo;
+import com.oas.webservice.vo.DriverPerformanceVo;
+import com.oas.webservice.vo.FeedbackVo;
+import com.oas.webservice.vo.LocationVo;
+import com.oas.webservice.vo.SvcComplaintsVo;
+import com.oas.webservice.vo.TextPublishVo;
+import com.oas.webservice.vo.VideoPublishVo;
+
+/**
+ * @author Siva
+ *
+ */
+@Path("/response")
+@XmlRootElement
+public class DeviceResponseController {
+
+	/** ***** Logger Instance. ******/
+	private final static Logger LOG = Logger
+			.getLogger(DeviceResponseController.class);
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/videoPublish")
+	public List<VideoPublishVo> videoPublish(@Context UriInfo info) {
+		List<VideoPublishVo> videoPub = new ArrayList<VideoPublishVo>();
+		String imeino = info.getQueryParameters().getFirst("str_IMEINO");
+		String dbName = info.getQueryParameters().getFirst("dbname");
+		try {
+			DeviceResponseDao deviceResponseDao = new DeviceResponseDaoImpl();
+			videoPub = deviceResponseDao.fetchVideoPublishDetails(imeino,
+					dbName);
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error("Video Publish fetch the details --> videoPublish()" + e);
+
+		}
+		return videoPub;
+
+	}
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/textPublish")
+	public List<TextPublishVo> textPublish(@Context UriInfo info) {
+		List<TextPublishVo> textPub = new ArrayList<TextPublishVo>();
+		String imeino = info.getQueryParameters().getFirst("str_IMEINO");
+		String dbName = info.getQueryParameters().getFirst("dbname");
+		try {
+			DeviceResponseDao deviceResponseDao = new DeviceResponseDaoImpl();
+
+			textPub = deviceResponseDao.fetchTextPublishDetails(imeino, dbName);
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error("Text Publish fetch the details --> textPublish()" + e);
+		}
+
+		return textPub;
+
+	}
+
+	@GET
+	@Path("insertFeedback")
+	public String insertFeedback(@Context UriInfo info) {
+		int rowCount = 0;
+		String vehicleNo = info.getQueryParameters().getFirst("vehicleNo");
+		String drivername = info.getQueryParameters().getFirst("drivername");
+		String drivercontact = info.getQueryParameters().getFirst(
+				"drivercontact");
+		String starrating = info.getQueryParameters().getFirst("starrating");
+		String feedback = info.getQueryParameters().getFirst("feedback");
+		String datetime = info.getQueryParameters().getFirst("datetime");
+		String vehicleclean = info.getQueryParameters()
+				.getFirst("vehicleclean");
+		String driverattitude = info.getQueryParameters().getFirst(
+				"driverattitude");
+		String passengerno = info.getQueryParameters().getFirst("passengerno");
+		String passengername = info.getQueryParameters().getFirst(
+				"passengername");
+		try {
+			DeviceResponseDao deviceResponseDao = new DeviceResponseDaoImpl();
+
+			rowCount = deviceResponseDao.insertFeedback(vehicleNo, drivername,
+					drivercontact, starrating, feedback, datetime,
+					vehicleclean, driverattitude, passengerno, passengername);
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error("insert the feedback  details --> insertFeedback()" + e);
+		}
+
+		if (rowCount > 0) {
+			return "Success";
+		} else {
+			return "Failure";
+
+		}
+
+	}
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/driverInfo")
+	public DriverPerformanceVo driverInfo(@Context UriInfo info) {
+		DriverPerformanceVo driverPerf = new DriverPerformanceVo();
+		String imeino = info.getQueryParameters().getFirst("str_IMEINO");
+		try {
+			DeviceResponseDao deviceResponseDao = new DeviceResponseDaoImpl();
+			driverPerf = deviceResponseDao.fetchDriverInfoDetails(imeino);
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error("fetch the driver info  details --> driverInfo()" + e);
+		}
+		return driverPerf;
+
+	}
+
+	@GET
+	@Path("insertVideoLog")
+	public String insertVideo(@Context UriInfo info) {
+		int rowCount = 0;
+		String array = info.getQueryParameters().getFirst("str_ary");
+		try {
+			DeviceResponseDao deviceResponseDao = new DeviceResponseDaoImpl();
+			rowCount = deviceResponseDao.insertVideoLog(array);
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error("insert video log  details --> insertVideo()" + e);
+		}
+		if (rowCount > 0) {
+			return "Success";
+		} else {
+			return "Failure";
+
+		}
+	}
+
+	@GET
+	@Path("insertDownloadStatus")
+	public String insertDownloadStatus(@Context UriInfo info) {
+		int rowCount = 0;
+		String array = info.getQueryParameters().getFirst("str_ary");
+		try {
+			DeviceResponseDao deviceResponseDao = new DeviceResponseDaoImpl();
+			rowCount = deviceResponseDao.insertDownloadStatus(array);
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error("insert download status  details --> insertDownloadStatus()"
+					+ e);
+		}
+
+		if (rowCount > 0) {
+			return "Success";
+		} else {
+			return "Failure";
+
+		}
+	}
+
+	@GET
+	@Path("insertLatLong")
+	public String insertlatLong(@Context UriInfo info) {
+		int rowCount = 0;
+		String array = info.getQueryParameters().getFirst("str_ary");
+		try {
+			DeviceResponseDao deviceResponseDao = new DeviceResponseDaoImpl();
+			rowCount = deviceResponseDao.insertlatLong(array);
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error("insert latlong  details --> insertlatLong()" + e);
+		}
+		if (rowCount > 0) {
+			return "Success";
+		} else {
+			return "Failure";
+
+		}
+	}
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/getLocation")
+	public List<LocationVo> getLocation(@Context UriInfo info) {
+		List<LocationVo> location = new ArrayList<LocationVo>();
+		String locationId = info.getQueryParameters()
+				.getFirst("str_locationId");
+		try {
+			DeviceResponseDao deviceResponseDao = new DeviceResponseDaoImpl();
+			location = deviceResponseDao.fetchLocationDetails(locationId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error("fetch location  details --> getLocation()" + e);
+		}
+		return location;
+	}
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/getRoleid")
+	public String getRoleid(@Context UriInfo info) {
+		String role="";
+		String userName = info.getQueryParameters().getFirst("userName");
+		String password = info.getQueryParameters().getFirst("password");
+		try {
+			DeviceResponseDao deviceResponseDao = new DeviceResponseDaoImpl();
+			role = deviceResponseDao.fetchRoleId(userName,password);
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error("fetch Role id  details --> getRoleid()" + e);
+		}
+		return role;
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/getComplaints")
+	public List<ComplaintsVo> getComplaints(@Context UriInfo info) {
+		List<ComplaintsVo> complaint = new ArrayList<ComplaintsVo>();
+		
+		try {
+			DeviceResponseDao deviceResponseDao = new DeviceResponseDaoImpl();
+			complaint = deviceResponseDao.fetchComplaintDetails();
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error("fetch complaint  details --> getComplaints()" + e);
+		}
+		return complaint;
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/getFeedback")
+	public List<FeedbackVo> getFeedback(@Context UriInfo info) {
+		List<FeedbackVo> feedback = new ArrayList<FeedbackVo>();
+		
+		try {
+			DeviceResponseDao deviceResponseDao = new DeviceResponseDaoImpl();
+			feedback = deviceResponseDao.fetchFeedbackDetails();
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error("fetch complaint  details --> getComplaints()" + e);
+		}
+		return feedback;
+	}
+	@GET
+	@Path("insertDriverFeedback")
+	public String insertDriverFeedback(@Context UriInfo info) {
+		int rowCount = 0;
+		String vechNo = info.getQueryParameters().getFirst("vechNo");
+		String date = info.getQueryParameters().getFirst("date");
+		String feedback = info.getQueryParameters().getFirst("feedback");
+		String remarks = info.getQueryParameters().getFirst("remarks");
+		try {
+			DeviceResponseDao deviceResponseDao = new DeviceResponseDaoImpl();
+			rowCount = deviceResponseDao.insertDriverFeedback(vechNo,date,feedback,remarks);
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error("insert Driver feedback  details --> insertDriverFeedback()" + e);
+		}
+		if (rowCount > 0) {
+			return "Success";
+		} else {
+			return "Failure";
+
+		}
+	}
+	
+	@GET
+	@Path("insertServiceComplaint")
+	public String insertServiceComplaint(@Context UriInfo info) {
+		int rowCount = 0;
+		String vechNo = info.getQueryParameters().getFirst("vechNo");
+		String date = info.getQueryParameters().getFirst("date");
+		String device1 = info.getQueryParameters().getFirst("device1");
+		String device2 = info.getQueryParameters().getFirst("device2");
+		String remarks = info.getQueryParameters().getFirst("remarks");
+		try {
+			DeviceResponseDao deviceResponseDao = new DeviceResponseDaoImpl();
+			rowCount = deviceResponseDao.insertServiceComplaint(vechNo,date,device1,device2,remarks);
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error("insert service complaint feedback  details --> insertDriverFeedback()" + e);
+		}
+		if (rowCount > 0) {
+			return "Success";
+		} else {
+			return "Failure";
+
+		}
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/getSvcLogin")
+	public String getSvcLogin(@Context UriInfo info) {
+		String rowcount="";
+		String target = "";
+		String empId = info.getQueryParameters().getFirst("svc_emp_id");
+		String password = info.getQueryParameters().getFirst("password");
+		try {
+			DeviceResponseDao deviceResponseDao = new DeviceResponseDaoImpl();
+			rowcount = deviceResponseDao.fetchsvcempId(empId,password);
+			
+			if(rowcount != null && !rowcount.isEmpty()){
+				target = "success";
+			}
+			else{
+				target = "failure";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error("fetch svc empId details --> getSvcLogin()" + e);
+		}
+		return target;
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/insertAttendance")
+	public String insertAttendance(@Context UriInfo info){
+		int rowCount = 0;
+		String empId = info.getQueryParameters().getFirst("svc_emp_id");
+		String intime = info.getQueryParameters().getFirst("intime");
+		String latitude = info.getQueryParameters().getFirst("lat");
+		String longitude = info.getQueryParameters().getFirst("long");
+		try {
+			DeviceResponseDao deviceResponseDao = new DeviceResponseDaoImpl();
+			rowCount = deviceResponseDao.insertAttendanceDetails(empId,intime,latitude,longitude);
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error("insert Attendance details --> insertAttendance()" + e);
+		}
+		if (rowCount > 0) {
+			return "Success";
+		} else {
+			return "Failure";
+}
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/getServiceComplaints")
+	public List<SvcComplaintsVo> svcComplaints(@Context UriInfo info){
+		List<SvcComplaintsVo> svcComplaintList = new ArrayList<SvcComplaintsVo>();
+		//SvcComplaintsVo svcComplaintList = new SvcComplaintsVo();
+		String svc_emp_id = info.getQueryParameters().getFirst("svc_emp_id");
+		try {
+			DeviceResponseDao deviceResponseDao = new DeviceResponseDaoImpl();
+			svcComplaintList = deviceResponseDao.fetchSvcComplaints(svc_emp_id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error("fetch the service complaints info  details --> svcComplaints()" + e);
+		}
+		return svcComplaintList;	
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/insertPassengerIntrest")
+	public String insertPassengerIntrest(@Context UriInfo info){
+		int rowCount = 0;
+		String adid = info.getQueryParameters().getFirst("adid");
+		String advtfilename = info.getQueryParameters().getFirst("advtfilename");
+		String ins_datetime = info.getQueryParameters().getFirst("ins_datetime");
+		String pass_name = info.getQueryParameters().getFirst("pass_name");
+		String pass_mobile = info.getQueryParameters().getFirst("pass_mobile");
+		try {
+			DeviceResponseDao deviceResponseDao = new DeviceResponseDaoImpl();
+			rowCount = deviceResponseDao.insertPassengerIntrestDetails(adid,advtfilename,ins_datetime,pass_name,pass_mobile);
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error("insert PassengerIntrest details --> insertPassengerIntrest()" + e);
+		}
+		if (rowCount > 0) {
+			return "Success";
+		} else {
+			return "Failure";
+}
+	}
+}

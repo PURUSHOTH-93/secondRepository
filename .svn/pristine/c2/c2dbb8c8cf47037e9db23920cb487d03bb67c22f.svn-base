@@ -1,0 +1,99 @@
+/**
+ * 
+ */
+package com.oas.webservice.vo;
+
+import java.io.Serializable;
+
+/**
+ * @author Siva
+ *
+ */
+public class DriverPerformanceVo implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String vechNo;
+	private String vechModel;
+	private String vechOwner;
+	private String driverContact;
+	private String vechOwnerEmail;
+	private String vechDriverName;
+	/**
+	 * @return the vechNo
+	 */
+	public String getVechNo() {
+		return vechNo;
+	}
+	/**
+	 * @param vechNo the vechNo to set
+	 */
+	public void setVechNo(String vechNo) {
+		this.vechNo = vechNo;
+	}
+	/**
+	 * @return the vechModel
+	 */
+	public String getVechModel() {
+		return vechModel;
+	}
+	/**
+	 * @param vechModel the vechModel to set
+	 */
+	public void setVechModel(String vechModel) {
+		this.vechModel = vechModel;
+	}
+	/**
+	 * @return the vechOwner
+	 */
+	public String getVechOwner() {
+		return vechOwner;
+	}
+	/**
+	 * @param vechOwner the vechOwner to set
+	 */
+	public void setVechOwner(String vechOwner) {
+		this.vechOwner = vechOwner;
+	}
+	/**
+	 * @return the driverContact
+	 */
+	public String getDriverContact() {
+		return driverContact;
+	}
+	/**
+	 * @param driverContact the driverContact to set
+	 */
+	public void setDriverContact(String driverContact) {
+		this.driverContact = driverContact;
+	}
+	/**
+	 * @return the vechOwnerEmail
+	 */
+	public String getVechOwnerEmail() {
+		return vechOwnerEmail;
+	}
+	/**
+	 * @param vechOwnerEmail the vechOwnerEmail to set
+	 */
+	public void setVechOwnerEmail(String vechOwnerEmail) {
+		this.vechOwnerEmail = vechOwnerEmail;
+	}
+	/**
+	 * @return the vechDriverName
+	 */
+	public String getVechDriverName() {
+		return vechDriverName;
+	}
+	/**
+	 * @param vechDriverName the vechDriverName to set
+	 */
+	public void setVechDriverName(String vechDriverName) {
+		this.vechDriverName = vechDriverName;
+	}
+	
+	
+
+}

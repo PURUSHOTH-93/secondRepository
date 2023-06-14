@@ -1,0 +1,254 @@
+/**
+ * 
+ */
+package com.oas.webservice.vo;
+
+import java.io.Serializable;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+/**
+ * @author Siva
+ *
+ */
+
+/*@XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement(name = "videoPublish")*/
+
+public class VideoPublishVo implements Serializable {
+	
+
+	
+
+		private static final long serialVersionUID = 1L;
+
+		
+		//@XmlElement(name = "publishId")
+		private String publishId;
+
+		//@XmlElement(name = "groupId")
+		private String groupId;
+		
+		//@XmlElement(name = "videoFileName")
+		private String videoFileName;
+		
+		//@XmlElement(name = "publishDate")
+		private String publishDate;
+		//@XmlElement(name = "vpFlag")
+		private String vpFlag;
+		
+		//@XmlElement(name = "startDate")
+		private String startDate;
+		
+		//@XmlElement(name = "endtDate")
+		private String endDate;
+		//@XmlElement(name = "duration")
+		private String duration;
+		//@XmlElement(name = "fileSize")
+		private String fileSize;
+		//@XmlElement(name = "fileType")
+		private String fileType;
+		//@XmlElement(name = "catgName")
+		private String catgName;
+		//@XmlElement(name = "latitude")
+		private String latitude;
+		//@XmlElement(name = "logtitude")
+		private String logtitude;
+		
+		private String locationId;
+		private String contentType;
+		private String vidImgPath;
+		
+		
+		/**
+		 * @return the publishId
+		 */
+		public String getPublishId() {
+			return publishId;
+		}
+		/**
+		 * @param publishId the publishId to set
+		 */
+		public void setPublishId(String publishId) {
+			this.publishId = publishId;
+		}
+		/**
+		 * @return the groupId
+		 */
+		public String getGroupId() {
+			return groupId;
+		}
+		/**
+		 * @param groupId the groupId to set
+		 */
+		public void setGroupId(String groupId) {
+			this.groupId = groupId;
+		}
+		/**
+		 * @return the videoFileName
+		 */
+		public String getVideoFileName() {
+			return videoFileName;
+		}
+		/**
+		 * @param videoFileName the videoFileName to set
+		 */
+		public void setVideoFileName(String videoFileName) {
+			this.videoFileName = videoFileName;
+		}
+		/**
+		 * @return the publishDate
+		 */
+		public String getPublishDate() {
+			return publishDate;
+		}
+		/**
+		 * @param publishDate the publishDate to set
+		 */
+		public void setPublishDate(String publishDate) {
+			this.publishDate = publishDate;
+		}
+		/**
+		 * @return the vpFlag
+		 */
+		public String getVpFlag() {
+			return vpFlag;
+		}
+		/**
+		 * @param vpFlag the vpFlag to set
+		 */
+		public void setVpFlag(String vpFlag) {
+			this.vpFlag = vpFlag;
+		}
+		/**
+		 * @return the startDate
+		 */
+		public String getStartDate() {
+			return startDate;
+		}
+		/**
+		 * @param startDate the startDate to set
+		 */
+		public void setStartDate(String startDate) {
+			this.startDate = startDate;
+		}
+		/**
+		 * @return the endDate
+		 */
+		public String getEndDate() {
+			return endDate;
+		}
+		/**
+		 * @param endDate the endDate to set
+		 */
+		public void setEndDate(String endDate) {
+			this.endDate = endDate;
+		}
+		/**
+		 * @return the duration
+		 */
+		public String getDuration() {
+			return duration;
+		}
+		/**
+		 * @param duration the duration to set
+		 */
+		public void setDuration(String duration) {
+			this.duration = duration;
+		}
+		/**
+		 * @return the fileSize
+		 */
+		public String getFileSize() {
+			return fileSize;
+		}
+		/**
+		 * @param fileSize the fileSize to set
+		 */
+		public void setFileSize(String fileSize) {
+			this.fileSize = fileSize;
+		}
+		/**
+		 * @return the fileType
+		 */
+		public String getFileType() {
+			return fileType;
+		}
+		/**
+		 * @param fileType the fileType to set
+		 */
+		public void setFileType(String fileType) {
+			this.fileType = fileType;
+		}
+		/**
+		 * @return the catgName
+		 */
+		public String getCatgName() {
+			return catgName;
+		}
+		/**
+		 * @param catgName the catgName to set
+		 */
+		public void setCatgName(String catgName) {
+			this.catgName = catgName;
+		}
+		/**
+		 * @return the latitude
+		 */
+		public String getLatitude() {
+			return latitude;
+		}
+		/**
+		 * @param latitude the latitude to set
+		 */
+		public void setLatitude(String latitude) {
+			this.latitude = latitude;
+		}
+		/**
+		 * @return the logtitude
+		 */
+		public String getLogtitude() {
+			return logtitude;
+		}
+		/**
+		 * @param logtitude the logtitude to set
+		 */
+		public void setLogtitude(String logtitude) {
+			this.logtitude = logtitude;
+		}
+		/**
+		 * @return the locationId
+		 */
+		public String getLocationId() {
+			return locationId;
+		}
+		/**
+		 * @param locationId the locationId to set
+		 */
+		public void setLocationId(String locationId) {
+			this.locationId = locationId;
+		}
+		/**
+		 * @return the contentType
+		 */
+		public String getContentType() {
+			return contentType;
+		}
+		public String getVidImgPath() {
+			return vidImgPath;
+		}
+		public void setVidImgPath(String vidImgPath) {
+			this.vidImgPath = vidImgPath;
+		}
+		/**
+		 * @param contentType the contentType to set
+		 */
+		public void setContentType(String contentType) {
+			this.contentType = contentType;
+		}
+
+
+		}

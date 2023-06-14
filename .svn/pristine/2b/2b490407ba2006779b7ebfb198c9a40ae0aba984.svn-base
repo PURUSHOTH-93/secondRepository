@@ -1,0 +1,7 @@
+# Login Authentication Page 
+Login.username= Username
+Login.password= Password
+Login.loginText= Login
+Login.unsuccessful= Login Failed. Please try again.
+Login.Title= AOW Login
+Login.Heading= AOW Login

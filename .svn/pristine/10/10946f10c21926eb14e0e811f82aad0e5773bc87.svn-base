@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+
+	<Resource name="TEFWeb" auth="Container" type="javax.sql.DataSource"
+		testOnBorrow="true" validationInterval="34000" validationQuery="Select 1"
+		username="root" password="sa" driverClassName="com.mysql.jdbc.Driver"
+		url="jdbc:mysql://192.168.1.194:3306/dbaow" maxActive="10" />
+
+	<!-- validationInterval - query 'select 1 ' to database in time interval 
+		of 34s. Refer Link as Detailed Information about connection pooling http://www.tomcatexpert.com/blog/2010/04/01/configuring-jdbc-pool-high-concurrency -->
+</Context> 

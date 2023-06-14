@@ -1,0 +1,25 @@
+/**
+ * 
+ */
+package com.oas.webservice.vo;
+
+/**
+ * @author Siva
+ *
+ */
+public class ComplaintsVo {
+	
+	private String complaintName;
+	
+
+	public String getComplaintName() {
+		return complaintName;
+	}
+	/**
+	 * @param complaintName the complaintName to set
+	 */
+	public void setComplaintName(String complaintName) {
+		this.complaintName = complaintName;
+	}
+	
+}

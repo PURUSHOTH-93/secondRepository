@@ -1,0 +1,61 @@
+/**
+ * 
+ */
+package com.oas.webservice.vo;
+
+import java.io.Serializable;
+
+/**
+ * @author Siva
+ *
+ */
+public class LocationVo implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private String locationId;
+	private String geofenceEncode;
+	private String createDateTime;
+	/**
+	 * @return the locationId
+	 */
+	public String getLocationId() {
+		return locationId;
+	}
+	/**
+	 * @param locationId the locationId to set
+	 */
+	public void setLocationId(String locationId) {
+		this.locationId = locationId;
+	}
+	/**
+	 * @return the geofenceEncode
+	 */
+	public String getGeofenceEncode() {
+		return geofenceEncode;
+	}
+	/**
+	 * @param geofenceEncode the geofenceEncode to set
+	 */
+	public void setGeofenceEncode(String geofenceEncode) {
+		this.geofenceEncode = geofenceEncode;
+	}
+	/**
+	 * @return the createDateTime
+	 */
+	public String getCreateDateTime() {
+		return createDateTime;
+	}
+	/**
+	 * @param createDateTime the createDateTime to set
+	 */
+	public void setCreateDateTime(String createDateTime) {
+		this.createDateTime = createDateTime;
+	}
+	
+	
+
+}
